@@ -38,9 +38,10 @@ def upload_files(drive, files, folder_name, folder_id):
                     'parents': [folder_id],
                     'mimeType': None
                     }
-        res = drive.files().create(body=metadata, media_body=file).execute()
-        # if res:
-        #     print('Uploaded "%s" (%s)' % (file, res['mimeType']))
+        try:
+            res = drive.files().create(body=metadata, media_body=file).execute()
+        except googleapiclient.errors.UnknownFileType:
+            print('Unknown filetype error for {}. Skipping the file.'.format(file))
 
 
 def upload_folder(drive, folder_path, folder_id):
