@@ -1,9 +1,20 @@
+import os
+import sys
+import argparse
+import asyncio
+import aiohttp
+from aiohttp import web
+
+import googleapiclient.errors
 from googleapiclient.discovery import build
+
 from httplib2 import Http
 from oauth2client import file, client, tools
 from tqdm import tqdm
-import os, sys
-import argparse
+
+
+DEFAULT_CONCUR_REQ = 20
+MAX_CONCUR_REQ = 1000
 
 
 def create_drive():
@@ -17,7 +28,7 @@ def create_drive():
     if not creds or creds.invalid:
         print("make new storage data file ")
         flow = client.flow_from_clientsecrets('client_secret_drive.json', SCOPES)
-        tools.run(flow, store)
+        creds = tools.run_flow(flow, store)
     DRIVE = build('drive', 'v3', http=creds.authorize(Http()))
     return DRIVE
 
@@ -42,6 +53,8 @@ def upload_files(drive, files, folder_name, folder_id):
             res = drive.files().create(body=metadata, media_body=file).execute()
         except googleapiclient.errors.UnknownFileType:
             print('Unknown filetype error for {}. Skipping the file.'.format(file))
+        # if res:
+        #     print('Uploaded "%s" (%s)' % (file, res['mimeType']))
 
 
 def upload_folder(drive, folder_path, folder_id):
@@ -101,5 +114,5 @@ if __name__ == '__main__':
     folder_path = args.folder_path
     folder_id = args.folder_id
     # folder_path = r'C:\Git\GoogleDriveAPI\test'
-    # folder_id = '1wrlqfK2r3qHkgIXLHfKdYFj-b70NgCW7'
+    # folder_id = '1Q6gaU4kHaLRN5psS4S_******'
     main(folder_path, folder_id)
