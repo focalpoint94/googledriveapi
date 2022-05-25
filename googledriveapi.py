@@ -45,7 +45,8 @@ def upload_files(drive, files, folder_name, folder_id):
     '''
     print('Uploading {} files to {}...'.format(len(files), folder_name))
     for file in tqdm(files):
-        metadata = {'name': file,
+        file_name = file.split('\\')[-1]
+        metadata = {'name': file_name,
                     'parents': [folder_id],
                     'mimeType': None
                     }
