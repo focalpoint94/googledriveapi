@@ -180,7 +180,7 @@ def upload_folder(folder_path, folder_id, concur_req=DEFAULT_CONCUR_REQ, retry=T
 
 if __name__ == '__main__':
     '''
-    python googledriveapi_async.py C:\Git\PytorchBasic\caption\data_dir 1CwX9S8mJSL_43oJgLdoiNoF55yU7VjYD
+    python googledriveapi_async.py C:\Git\PytorchBasic\caption\data_dir 1CwX9S8mJSL_43oJgLd**********
     '''
     parser = argparse.ArgumentParser(
         description='Upload folder including all sub-folders to google drive.')
@@ -207,7 +207,7 @@ if __name__ == '__main__':
     enable_retry = args.enable_retry
 
     # folder_path = r'C:\Git\PytorchBasic\caption\data_dir\resized_images\train2014'
-    # folder_id = '1Z_FYPUP2X1amVFYPnjczl2zXgxY2euc9'
+    # folder_id = '1Z_FYPUP2X1amVFYPnjczl2*********'
     # concur_req = DEFAULT_CONCUR_REQ
     # enable_retry = True
     print(concur_req)
