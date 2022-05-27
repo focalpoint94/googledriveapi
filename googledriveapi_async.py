@@ -210,7 +210,7 @@ if __name__ == '__main__':
     # folder_id = '1Z_FYPUP2X1amVFYPnjczl2*********'
     # concur_req = DEFAULT_CONCUR_REQ
     # enable_retry = True
-    print(concur_req)
+    
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     drive = create_drive()
     token = get_token()
