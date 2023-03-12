@@ -16,8 +16,8 @@ from oauth2client import file, client, tools
 from tqdm import tqdm
 
 
-DEFAULT_CONCUR_REQ = 100
-MAX_CONCUR_REQ = 1000
+DEFAULT_CONCUR_REQ = 30
+MAX_CONCUR_REQ = 50
 
 
 class UploadError(Exception):
@@ -122,6 +122,7 @@ async def upload_files(file_paths, folder_name, folder_id, concur_req=DEFAULT_CO
             try:
                 await job
             except UploadError as exc:
+                print(exc)
                 failed.append((exc.file_path, exc.folder_id))
     return failed
 
@@ -180,37 +181,37 @@ def upload_folder(folder_path, folder_id, concur_req=DEFAULT_CONCUR_REQ, retry=T
 
 if __name__ == '__main__':
     '''
-    python googledriveapi_async.py C:\Git\PytorchBasic\caption\data_dir 1CwX9S8mJSL_43oJgLd**********
+    python googledriveapi_async.py C:\Git\PytorchBasic\caption\data_dir 1CwX9S8mJSL_43oJgLdoiNoF55yU7Vj**
     '''
-    parser = argparse.ArgumentParser(
-        description='Upload folder including all sub-folders to google drive.')
-    parser.add_argument('folder_path',
-                        help='folder_path: local folder path to upload'
-                             '(e.g.) C:\Git\PytorchBasic')
-    parser.add_argument('folder_id',
-                        help='folder_id: target folder\'s id in google drive'
-                             '(e.g.) 1FzI5QChbh4Q-nEQGRu8D-********')
-    parser.add_argument('concur_req', nargs='?', default=DEFAULT_CONCUR_REQ, type=int,
-                        help='concur_req: maximum number of concurrent connections'
-                             '(Default) DEFAULT_CONCUR_REQ')
-    parser.add_argument('enable_retry', nargs='?', default=True, type=bool,
-                        help='retry uploading failed uploads if set to True'
-                             '(Default) True')
-    args = parser.parse_args()
-    if not os.path.isdir(args.folder_path):
-        print('*** Folder path error: invalid path')
-        parser.print_usage()
-        sys.exit(1)
-    folder_path = args.folder_path
-    folder_id = args.folder_id
-    concur_req = args.concur_req
-    enable_retry = args.enable_retry
+    # parser = argparse.ArgumentParser(
+    #     description='Upload folder including all sub-folders to google drive.')
+    # parser.add_argument('folder_path',
+    #                     help='folder_path: local folder path to upload'
+    #                          '(e.g.) C:\Git\PytorchBasic')
+    # parser.add_argument('folder_id',
+    #                     help='folder_id: target folder\'s id in google drive'
+    #                          '(e.g.) 1FzI5QChbh4Q-nEQGRu8D-********')
+    # parser.add_argument('concur_req', nargs='?', default=DEFAULT_CONCUR_REQ, type=int,
+    #                     help='concur_req: maximum number of concurrent connections'
+    #                          '(Default) DEFAULT_CONCUR_REQ')
+    # parser.add_argument('enable_retry', nargs='?', default=True, type=bool,
+    #                     help='retry uploading failed uploads if set to True'
+    #                          '(Default) True')
+    # args = parser.parse_args()
+    # if not os.path.isdir(args.folder_path):
+    #     print('*** Folder path error: invalid path')
+    #     parser.print_usage()
+    #     sys.exit(1)
+    # folder_path = args.folder_path
+    # folder_id = args.folder_id
+    # concur_req = args.concur_req
+    # enable_retry = args.enable_retry
 
-    # folder_path = r'C:\Git\PytorchBasic\caption\data_dir\resized_images\train2014'
-    # folder_id = '1Z_FYPUP2X1amVFYPnjczl2*********'
-    # concur_req = DEFAULT_CONCUR_REQ
-    # enable_retry = True
-    
+    folder_path = r'C:\Users\chsze\Desktop\Georgia Tech\Second Semester\Deep Learning\Project\DATASET'
+    folder_id = '1oHa63uLxPcdBkSVixbv_skMt-nOJ7z**'
+    concur_req = DEFAULT_CONCUR_REQ
+    enable_retry = True
+
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     drive = create_drive()
     token = get_token()
