@@ -8,6 +8,10 @@ python program that automatically uploads/downloads files & folders to/from your
 
 uploads a folder to your google drive
 
+First enable the google drive api by following steps of:
+https://developers.google.com/drive/api/quickstart/python
+
+
 command line example
 
 ```
